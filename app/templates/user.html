@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<table class="table table-hover">
+    <tr>
+        <td>
+                <h1>User: {{ user.firstName }} {{ user.lastName}}</h1>
+                <p>Business Name: {{ user.companyName }}</p>
+                <p>Member Since: {{ user.last_seen }}</p>
+        </td>
+    </tr>
+</table>
+
+{% for product in produce %}
+    {% include 'produce/product.html' %}
+{% endfor %}
+
+{% endblock %}
+
+
