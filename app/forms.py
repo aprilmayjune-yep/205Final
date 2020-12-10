@@ -11,5 +11,9 @@ class productForm(FlaskForm):
 class registerForm(FlaskForm):
     submit = SubmitField('Submit')
 
+class searchForm(FlaskForm):
+    searchable = StringField('Search', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
 
 

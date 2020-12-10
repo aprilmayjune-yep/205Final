@@ -24,8 +24,11 @@ def login():
 
 @app.route('/search')
 def search():
-   searched=Product.query.[something]()
-   return render_template('Search.html', products=searched, title='Search')
+   searched=Product.query.all()
+   form=searchForm
+   if form.validate_on_submit():
+       searched=Product.query.filter_by(name=form.searchable.data).all()
+   return render_template('Search.html', products=searched, form=form, title='Search')
 
 @app.route('/user/<name>')
 def user(name):

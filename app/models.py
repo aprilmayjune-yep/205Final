@@ -1,4 +1,6 @@
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 from app import db, login
 
 class User(UserMixin, db.Model):
@@ -8,8 +10,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password = db.Column(db.String(128))
     companyName = db.Column(db.String(140))
-    memberSince = db.Column(db.DateTime, default=datetime.?)
-    userToLocation = db.relationship("UserToLocation", backref='user', lazy='dynamic')
+    memberSince = db.Column(db.DateTime, format='%Y-%m-%d', ref='user', lazy='dynamic')
     paymentInfo = db.relationship("PaymentInfo", backref='user', lazy='dynamic')
 
     def __repr__(self):
@@ -47,21 +48,21 @@ class UserToLocation(db.Model):
 
 
 
-class PaymentInfo(db.Model)
+class PaymentInfo(db.Model):
   id=db.Column(db.Integer,primary_key=True)
   cardType=db.Column(db.String(20), index=True)
   cardNumber=db.Column(db.String(9), index=True)
   securityNumber=db.Column(db.String(3))
   userId=db.Column(db.Integer,db.ForeignKey('user.id'))
 
-    def __repr__(self):
+  def __repr__(self):
         return '<Payment Info {}>'.format(User.query.filter_by(id=self.userId).first().firstName)
 
 
 class Product(db.Model):
     Id = db.Column(db.Integer, primary_key=True)
     userToLocationID = db.Column(db.Integer, db.ForeignKey('userToLocation.id'))
-    dateHarvested = db.Column(db.DateTime, default=datetime.?)
+    dateHarvested = db.Column(db.DateTime, format='%Y-%m-%d')
     amount = db.Column(db.String(64), index=True)
     name = db.Column(db.String(64), index=True)
     description = db.Column(db.String(400), index=True)
