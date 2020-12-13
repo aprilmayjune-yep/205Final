@@ -10,7 +10,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password = db.Column(db.String(128))
     companyName = db.Column(db.String(140))
-    memberSince = db.Column(db.DateTime, format='%Y-%m-%d', ref='user', lazy='dynamic')
+    memberSince = db.Column(db.String(2000))
     paymentInfo = db.relationship("PaymentInfo", backref='user', lazy='dynamic')
 
     def __repr__(self):
@@ -62,7 +62,7 @@ class PaymentInfo(db.Model):
 class Product(db.Model):
     Id = db.Column(db.Integer, primary_key=True)
     userToLocationID = db.Column(db.Integer, db.ForeignKey('userToLocation.id'))
-    dateHarvested = db.Column(db.DateTime, format='%Y-%m-%d')
+    dateHarvested = db.Column(db.String(2000))
     amount = db.Column(db.String(64), index=True)
     name = db.Column(db.String(64), index=True)
     description = db.Column(db.String(400), index=True)
